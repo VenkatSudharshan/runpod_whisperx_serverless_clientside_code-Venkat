@@ -331,3 +331,23 @@ def trim_audio_to_size(input_file: str, target_size_mb: float) -> str:
 
     print(f"Trimmed audio saved as {output_file}")
     return output_file
+
+def encodeAudioToBase64(audioPath):
+    with open(audioPath, "rb") as audio_file:
+        encoded_string = base64.b64encode(audio_file.read())
+    return encoded_string.decode("utf-8")
+
+
+
+base64AudioString = encodeAudioToBase64("./example.mp3")
+
+apiResponse = transcribe_audio(
+    base64_string_or_url=base64AudioString,
+    runpod_api_key="",
+    server_endpoint="",
+    polling_interval=20
+)
+
+apiResponseOutput = apiResponse["output"]
+
+print(apiResponseOutput)
